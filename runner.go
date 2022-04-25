@@ -9,8 +9,8 @@ import (
 	"github.com/strangelove-ventures/lens/byop"
 	lens "github.com/strangelove-ventures/lens/client"
 	"github.com/volumefi/conductor/client/cronchain"
-	cronchaintypes "github.com/volumefi/conductor/types/cronchain"
-	terratypes "github.com/volumefi/conductor/types/terra"
+	terratypes "github.com/volumefi/conductor/types/volumefi/conductor/types/terra"
+	cronchaintypes "github.com/volumefi/conductor/types/volumefi/cronchain/x/consensus/types"
 
 	chain "github.com/volumefi/conductor/client"
 )

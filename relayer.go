@@ -5,7 +5,7 @@ import (
 
 	"github.com/99designs/keyring"
 	"github.com/volumefi/conductor/client/cronchain"
-	cronchaintypes "github.com/volumefi/conductor/types/cronchain"
+	cronchaintypes "github.com/volumefi/conductor/types/volumefi/cronchain/x/consensus/types"
 	"github.com/volumefi/utils/signing"
 )
 

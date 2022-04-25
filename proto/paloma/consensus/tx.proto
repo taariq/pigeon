@@ -1,10 +1,14 @@
 syntax = "proto3";
-package volumefi.cronchain.concensus;
+package volumefi.cronchain.consensus;
 
-option go_package = "github.com/volumefi/conductor/types/cronchain";
+// this line is used by starport scaffolding # proto/tx/import
 
+option go_package = "github.com/volumefi/cronchain/x/consensus/types";
+
+// Msg defines the Msg service.
 service Msg {
       rpc AddMessagesSignatures(MsgAddMessagesSignatures) returns (MsgAddMessagesSignaturesResponse);
+// this line is used by starport scaffolding # proto/tx/rpc
 }
 
 message MsgAddMessagesSignatures {
@@ -22,3 +26,4 @@ message MsgAddMessagesSignatures {
 message MsgAddMessagesSignaturesResponse {
 }
 
+// this line is used by starport scaffolding # proto/tx/message

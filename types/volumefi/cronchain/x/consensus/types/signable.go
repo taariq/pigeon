@@ -1,4 +1,4 @@
-package cronchain
+package types
 
 type Signable interface {
 	Signable()

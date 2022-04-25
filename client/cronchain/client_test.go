@@ -11,8 +11,8 @@ import (
 	"github.com/strangelove-ventures/lens/byop"
 	lens "github.com/strangelove-ventures/lens/client"
 	"github.com/stretchr/testify/assert"
-	"github.com/volumefi/conductor/types/cronchain"
-	"github.com/volumefi/conductor/types/testdata"
+	"github.com/volumefi/conductor/types/volumefi/conductor/types/testdata"
+	cronchain "github.com/volumefi/conductor/types/volumefi/cronchain/x/consensus/types"
 
 	"google.golang.org/grpc/test/bufconn"
 

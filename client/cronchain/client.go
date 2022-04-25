@@ -10,14 +10,14 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/crypto/keyring"
 	chain "github.com/volumefi/conductor/client"
-	cronchain "github.com/volumefi/conductor/types/cronchain"
+	concensustypes "github.com/volumefi/conductor/types/volumefi/cronchain/x/consensus/types"
 )
 
 type Client struct {
 	L *chain.LensClient
 }
 
-type QueuedMessage[T cronchain.Signable] struct {
+type QueuedMessage[T concensustypes.Signable] struct {
 	ID    uint64
 	Nonce []byte
 	Msg   T
@@ -25,7 +25,7 @@ type QueuedMessage[T cronchain.Signable] struct {
 
 // QueryMessagesForSigning returns a list of messages from a given queueTypeName that
 // need to be signed by the provided validator given the valAddress.
-func QueryMessagesForSigning[T cronchain.Signable](
+func QueryMessagesForSigning[T concensustypes.Signable](
 	ctx context.Context,
 	c Client,
 	valAddress string,
@@ -34,15 +34,15 @@ func QueryMessagesForSigning[T cronchain.Signable](
 	return queryMessagesForSigning[T](ctx, c.L, c.L.Codec.Marshaler, valAddress, queueTypeName)
 }
 
-func queryMessagesForSigning[T cronchain.Signable](
+func queryMessagesForSigning[T concensustypes.Signable](
 	ctx context.Context,
 	c grpc.ClientConn,
 	anyunpacker codectypes.AnyUnpacker,
 	valAddress string,
 	queueTypeName string,
 ) ([]QueuedMessage[T], error) {
-	qc := cronchain.NewQueryClient(c)
-	msgs, err := qc.QueuedMessagesForSigning(ctx, &cronchain.QueryQueuedMessagesForSigningRequest{
+	qc := concensustypes.NewQueryClient(c)
+	msgs, err := qc.QueuedMessagesForSigning(ctx, &concensustypes.QueryQueuedMessagesForSigningRequest{
 		ValAddress:    valAddress,
 		QueueTypeName: queueTypeName,
 	})
@@ -51,7 +51,7 @@ func queryMessagesForSigning[T cronchain.Signable](
 	}
 	var res []QueuedMessage[T]
 	for _, msg := range msgs.GetMessageToSign() {
-		var m cronchain.Signable
+		var m concensustypes.Signable
 		err := anyunpacker.UnpackAny(msg.GetMsg(), &m)
 		if err != nil {
 			return nil, whoops.Wrap(err, ErrUnableToUnpackAny)
@@ -95,15 +95,15 @@ func broadcastMessageSignatures(
 	if len(signatures) == 0 {
 		return nil
 	}
-	var signedMessages []*cronchain.MsgAddMessagesSignatures_MsgSignedMessage
+	var signedMessages []*concensustypes.MsgAddMessagesSignatures_MsgSignedMessage
 	for _, sig := range signatures {
-		signedMessages = append(signedMessages, &cronchain.MsgAddMessagesSignatures_MsgSignedMessage{
+		signedMessages = append(signedMessages, &concensustypes.MsgAddMessagesSignatures_MsgSignedMessage{
 			Id:            sig.ID,
 			QueueTypeName: sig.QueueTypeName,
 			Signature:     sig.Signature,
 		})
 	}
-	msg := &cronchain.MsgAddMessagesSignatures{
+	msg := &concensustypes.MsgAddMessagesSignatures{
 		SignedMessages: signedMessages,
 	}
 	_, err := ms.SendMsg(ctx, msg)

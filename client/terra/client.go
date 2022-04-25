@@ -6,7 +6,7 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	chain "github.com/volumefi/conductor/client"
-	types "github.com/volumefi/conductor/types/terra"
+	types "github.com/volumefi/conductor/types/volumefi/conductor/types/terra"
 )
 
 type SmartContractExecution struct {
